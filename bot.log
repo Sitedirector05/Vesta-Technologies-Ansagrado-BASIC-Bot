@@ -1,0 +1,282 @@
+C:\Users\Santino\CascadeProjects\discord-bot\main.py:88: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  'fecha_creacion': datetime.utcnow().isoformat()
+C:\Users\Santino\CascadeProjects\discord-bot\main.py:93: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  'fecha_creacion': datetime.utcnow().isoformat()
+C:\Users\Santino\CascadeProjects\discord-bot\main.py:98: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  'fecha_creacion': datetime.utcnow().isoformat()
+MongoDB no configurado. Usando almacenamiento local en archivos
+Error no capturado:
+Traceback (most recent call last):
+  File "C:\Users\Santino\CascadeProjects\discord-bot\main.py", line 545, in <module>
+    @bot.tree.command(name="dado", description="Tira un dado con el n�mero de caras que quieras")
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\app_commands\tree.py", line 944, in decorator
+    self.add_command(command, guild=guild, guilds=guilds)
+  File "C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\app_commands\tree.py", line 407, in add_command
+    raise CommandAlreadyRegistered(name, None)
+discord.app_commands.errors.CommandAlreadyRegistered: Command 'dado' already registered.
+
+2025-06-08 16:46:49,882 - __main__ - ERROR - Error al importar módulos: cannot import name 'DataStore' from 'datastore' (C:\Users\Santino\CascadeProjects\discord-bot\datastore.py)
+2025-06-08 16:46:49,940 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Santino\CascadeProjects\discord-bot\main.py", line 49, in <module>
+    from datastore import DataStore
+ImportError: cannot import name 'DataStore' from 'datastore' (C:\Users\Santino\CascadeProjects\discord-bot\datastore.py)
+
+2025-06-08 16:47:35,386 - __main__ - ERROR - Error al importar módulos: attempted relative import beyond top-level package
+2025-06-08 16:47:35,396 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Santino\CascadeProjects\discord-bot\main.py", line 50, in <module>
+    from commands.ahorcado import AhorcadoCog
+  File "C:\Users\Santino\CascadeProjects\discord-bot\commands\ahorcado.py", line 10, in <module>
+    from juegos.texto.ahorcado import JuegoAhorcado, generar_palabra_ahorcado
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\__init__.py", line 8, in <module>
+    from .texto import (
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\texto\__init__.py", line 6, in <module>
+    from .ahorcado import JuegoAhorcado
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\texto\ahorcado.py", line 11, in <module>
+    from ...config import datastore
+ImportError: attempted relative import beyond top-level package
+
+2025-06-08 16:47:58,726 - __main__ - ERROR - Error al importar módulos: No module named 'juegos.texto.adivina_numero'
+2025-06-08 16:47:58,728 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Santino\CascadeProjects\discord-bot\main.py", line 50, in <module>
+    from commands.ahorcado import AhorcadoCog
+  File "C:\Users\Santino\CascadeProjects\discord-bot\commands\ahorcado.py", line 10, in <module>
+    from juegos.texto.ahorcado import JuegoAhorcado, generar_palabra_ahorcado
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\__init__.py", line 8, in <module>
+    from .texto import (
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\texto\__init__.py", line 8, in <module>
+    from .adivina_numero import JuegoAdivinaNumero
+ModuleNotFoundError: No module named 'juegos.texto.adivina_numero'
+
+2025-06-08 16:48:33,108 - __main__ - ERROR - Error al importar módulos: attempted relative import beyond top-level package
+2025-06-08 16:48:33,110 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Santino\CascadeProjects\discord-bot\main.py", line 50, in <module>
+    from commands.ahorcado import AhorcadoCog
+  File "C:\Users\Santino\CascadeProjects\discord-bot\commands\ahorcado.py", line 10, in <module>
+    from juegos.texto.ahorcado import JuegoAhorcado, generar_palabra_ahorcado
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\__init__.py", line 8, in <module>
+    from .texto import (
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\texto\__init__.py", line 8, in <module>
+    from .adivina_numero import JuegoAdivinaNumero
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\texto\adivina_numero.py", line 10, in <module>
+    from ...juegos.config import obtener_config_juego, obtener_emoji_juego, obtener_color_embed
+ImportError: attempted relative import beyond top-level package
+
+2025-06-08 16:49:14,747 - __main__ - ERROR - Error al importar módulos: No module named 'juegos.texto.adivina_palabra'
+2025-06-08 16:49:14,747 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Santino\CascadeProjects\discord-bot\main.py", line 50, in <module>
+    from commands.ahorcado import AhorcadoCog
+  File "C:\Users\Santino\CascadeProjects\discord-bot\commands\ahorcado.py", line 10, in <module>
+    from juegos.texto.ahorcado import JuegoAhorcado, generar_palabra_ahorcado
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\__init__.py", line 8, in <module>
+    from .texto import (
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\texto\__init__.py", line 9, in <module>
+    from .adivina_palabra import JuegoAdivinaPalabra
+ModuleNotFoundError: No module named 'juegos.texto.adivina_palabra'
+
+2025-06-08 16:50:29,372 - __main__ - ERROR - Error al importar módulos: No module named 'juegos.texto.juego_21'
+2025-06-08 16:50:29,372 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Santino\CascadeProjects\discord-bot\main.py", line 50, in <module>
+    from commands.ahorcado import AhorcadoCog
+  File "C:\Users\Santino\CascadeProjects\discord-bot\commands\ahorcado.py", line 10, in <module>
+    from juegos.texto.ahorcado import JuegoAhorcado, generar_palabra_ahorcado
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\__init__.py", line 8, in <module>
+    from .texto import (
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\texto\__init__.py", line 10, in <module>
+    from .juego_21 import Juego21
+ModuleNotFoundError: No module named 'juegos.texto.juego_21'
+
+2025-06-08 16:51:54,561 - __main__ - ERROR - Error al importar módulos: No module named 'juegos.texto.dados_vs_bot'
+2025-06-08 16:51:54,564 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Santino\CascadeProjects\discord-bot\main.py", line 50, in <module>
+    from commands.ahorcado import AhorcadoCog
+  File "C:\Users\Santino\CascadeProjects\discord-bot\commands\ahorcado.py", line 10, in <module>
+    from juegos.texto.ahorcado import JuegoAhorcado, generar_palabra_ahorcado
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\__init__.py", line 8, in <module>
+    from .texto import (
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\texto\__init__.py", line 11, in <module>
+    from .dados_vs_bot import JuegoDados
+ModuleNotFoundError: No module named 'juegos.texto.dados_vs_bot'
+
+2025-06-08 16:53:22,636 - __main__ - ERROR - Error al importar módulos: No module named 'juegos.texto.juego_stop'
+2025-06-08 16:53:22,643 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Santino\CascadeProjects\discord-bot\main.py", line 50, in <module>
+    from commands.ahorcado import AhorcadoCog
+  File "C:\Users\Santino\CascadeProjects\discord-bot\commands\ahorcado.py", line 10, in <module>
+    from juegos.texto.ahorcado import JuegoAhorcado, generar_palabra_ahorcado
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\__init__.py", line 8, in <module>
+    from .texto import (
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\texto\__init__.py", line 12, in <module>
+    from .juego_stop import JuegoStop
+ModuleNotFoundError: No module named 'juegos.texto.juego_stop'
+
+2025-06-08 16:56:17,416 - __main__ - ERROR - Error al importar módulos: No module named 'juegos.texto.quien_dice_primero'
+2025-06-08 16:56:17,431 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Santino\CascadeProjects\discord-bot\main.py", line 50, in <module>
+    from commands.ahorcado import AhorcadoCog
+  File "C:\Users\Santino\CascadeProjects\discord-bot\commands\ahorcado.py", line 10, in <module>
+    from juegos.texto.ahorcado import JuegoAhorcado, generar_palabra_ahorcado
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\__init__.py", line 8, in <module>
+    from .texto import (
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\texto\__init__.py", line 13, in <module>
+    from .quien_dice_primero import JuegoQuienDicePrimero
+ModuleNotFoundError: No module named 'juegos.texto.quien_dice_primero'
+
+2025-06-08 16:58:02,767 - __main__ - ERROR - Error al importar módulos: No module named 'juegos.texto.verdadero_falso'
+2025-06-08 16:58:02,776 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Santino\CascadeProjects\discord-bot\main.py", line 50, in <module>
+    from commands.ahorcado import AhorcadoCog
+  File "C:\Users\Santino\CascadeProjects\discord-bot\commands\ahorcado.py", line 10, in <module>
+    from juegos.texto.ahorcado import JuegoAhorcado, generar_palabra_ahorcado
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\__init__.py", line 8, in <module>
+    from .texto import (
+  File "C:\Users\Santino\CascadeProjects\discord-bot\juegos\texto\__init__.py", line 14, in <module>
+    from .verdadero_falso import JuegoVerdaderoFalso
+ModuleNotFoundError: No module named 'juegos.texto.verdadero_falso'
+
+2025-06-08 16:59:57,932 - __main__ - ERROR - Error al importar módulos: cannot import name 'obtener_color_embed' from 'juegos.utils' (C:\Users\Santino\CascadeProjects\discord-bot\juegos\utils.py)
+2025-06-08 16:59:57,935 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\Santino\CascadeProjects\discord-bot\main.py", line 50, in <module>
+    from commands.ahorcado import AhorcadoCog
+  File "C:\Users\Santino\CascadeProjects\discord-bot\commands\ahorcado.py", line 11, in <module>
+    from juegos.utils import enviar_embed, obtener_color_embed, EstadoJuego
+ImportError: cannot import name 'obtener_color_embed' from 'juegos.utils' (C:\Users\Santino\CascadeProjects\discord-bot\juegos\utils.py)
+
+2025-06-08 17:00:31,698 - discord.client - INFO - logging in using static token
+2025-06-08 17:00:32,282 - bot - INFO - Cogs cargados correctamente
+2025-06-08 17:00:32,686 - bot - INFO - Comandos sincronizados: 4 comandos
+2025-06-08 17:00:33,134 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 0e4bff643ba4b5203fb1b8ce7891fc80).
+2025-06-08 17:00:35,165 - bot - INFO - Conectado como Ansagrado Intelligence (ID: 1381033270736846928)
+2025-06-08 17:00:35,166 - bot - INFO - Conectado a 3 servidores
+2025-06-08 17:00:35,166 - bot - INFO - ¡Bot listo y funcionando!
+2025-06-08 17:00:35,219 - __main__ - INFO - Ansagrado Intelligence#6615 está listo y escuchando comandos!
+2025-06-08 17:01:37,047 - juegos.texto.ahorcado - WARNING - Error al generar palabra: 400 - {"error":{"message":"deepseek-ai/deepseek-chat is not a valid model ID","code":400},"user_id":"user_2yCm0CJcFl6DT5arG0DOIoGHMcm"}
+2025-06-08 17:01:37,698 - juegos.texto.ahorcado - WARNING - Error al generar pistas: 400 - {"error":{"message":"deepseek-ai/deepseek-chat is not a valid model ID","code":400},"user_id":"user_2yCm0CJcFl6DT5arG0DOIoGHMcm"}
+2025-06-08 17:14:42,332 - discord.client - INFO - logging in using static token
+2025-06-08 17:14:43,188 - bot - INFO - Cogs cargados correctamente
+2025-06-08 17:14:43,721 - bot - INFO - Comandos sincronizados: 7 comandos
+2025-06-08 17:14:44,166 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 081fe4253c43897b76cf1b6c19c38c58).
+2025-06-08 17:14:46,192 - bot - INFO - Conectado como Ansagrado Intelligence (ID: 1381033270736846928)
+2025-06-08 17:14:46,193 - bot - INFO - Conectado a 3 servidores
+2025-06-08 17:14:46,193 - bot - INFO - ¡Bot listo y funcionando!
+2025-06-08 17:14:46,193 - __main__ - INFO - Ansagrado Intelligence#6615 está listo y escuchando comandos!
+2025-06-08 17:15:51,571 - discord.app_commands.tree - ERROR - Ignoring exception in command 'ping'
+Traceback (most recent call last):
+  File "C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\app_commands\commands.py", line 857, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Santino\CascadeProjects\discord-bot\commands\ping.py", line 70, in ping
+    for shard_id, shard in self.bot.shards.items():
+                           ^^^^^^^^^^^^^^^
+AttributeError: 'MiBot' object has no attribute 'shards'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\app_commands\tree.py", line 1310, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\app_commands\commands.py", line 883, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\app_commands\commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'ping' raised an exception: AttributeError: 'MiBot' object has no attribute 'shards'
+2025-06-08 17:16:12,966 - discord.app_commands.tree - ERROR - Ignoring exception in command 'ping'
+Traceback (most recent call last):
+  File "C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\app_commands\commands.py", line 857, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Santino\CascadeProjects\discord-bot\commands\ping.py", line 70, in ping
+    for shard_id, shard in self.bot.shards.items():
+                           ^^^^^^^^^^^^^^^
+AttributeError: 'MiBot' object has no attribute 'shards'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\app_commands\tree.py", line 1310, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\app_commands\commands.py", line 883, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\app_commands\commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'ping' raised an exception: AttributeError: 'MiBot' object has no attribute 'shards'
+2025-06-08 17:18:05,486 - discord.client - INFO - logging in using static token
+2025-06-08 17:18:05,828 - asyncio - WARNING - Executing <Task pending name='Task-1' coro=<Client.run.<locals>.runner() running at C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\client.py:895> wait_for=<Future pending cb=[shield.<locals>._outer_done_callback() at C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\asyncio\tasks.py:922, Task.task_wakeup()] created at C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py:448> cb=[_run_until_complete_cb() at C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py:181] created at C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py:100> took 0.359 seconds
+2025-06-08 17:18:06,215 - asyncio - WARNING - Executing <Task pending name='Task-1' coro=<Client.run.<locals>.runner() running at C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\client.py:895> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py:448> cb=[_run_until_complete_cb() at C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py:181] created at C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py:100> took 0.141 seconds
+2025-06-08 17:18:06,767 - bot - INFO - Cogs cargados correctamente
+2025-06-08 17:18:07,116 - bot - INFO - Comandos sincronizados: 7 comandos
+2025-06-08 17:18:07,682 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 732f6123ba9009ab382b2500a2fb6d47).
+2025-06-08 17:18:09,816 - bot - INFO - Conectado como Ansagrado Intelligence (ID: 1381033270736846928)
+2025-06-08 17:18:09,816 - bot - INFO - Conectado a 3 servidores
+2025-06-08 17:18:09,816 - bot - INFO - ¡Bot listo y funcionando!
+2025-06-08 17:18:09,816 - __main__ - INFO - Ansagrado Intelligence#6615 está listo y escuchando comandos!
+2025-06-08 17:19:30,388 - discord.client - INFO - logging in using static token
+2025-06-08 17:19:31,036 - bot - INFO - Cogs cargados correctamente
+2025-06-08 17:19:31,448 - bot - INFO - Comandos sincronizados: 7 comandos
+2025-06-08 17:19:31,866 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: b4ce820bf17493059b47585eb6ebae39).
+2025-06-08 17:19:33,887 - bot - INFO - Conectado como Ansagrado Intelligence (ID: 1381033270736846928)
+2025-06-08 17:19:33,887 - bot - INFO - Conectado a 3 servidores
+2025-06-08 17:19:33,887 - bot - INFO - ¡Bot listo y funcionando!
+2025-06-08 17:20:42,008 - discord.client - INFO - logging in using static token
+2025-06-08 17:20:42,658 - bot - INFO - Iniciando carga de cogs...
+2025-06-08 17:20:42,658 - bot - INFO - Cargando AhorcadoCog...
+2025-06-08 17:20:42,658 - bot - INFO - Cargando PingCog...
+2025-06-08 17:20:42,659 - bot - INFO - Cargando RobloxLookupCog...
+2025-06-08 17:20:42,659 - bot - INFO - Cargando DeepSeekCog...
+2025-06-08 17:20:42,659 - bot - INFO - Cogs cargados correctamente
+2025-06-08 17:20:42,659 - bot - INFO - Sincronizando comandos...
+2025-06-08 17:20:43,085 - bot - INFO - Comandos sincronizados (7):
+2025-06-08 17:20:43,085 - bot - INFO - - /ahorcado
+2025-06-08 17:20:43,085 - bot - INFO - - /letra
+2025-06-08 17:20:43,085 - bot - INFO - - /pista
+2025-06-08 17:20:43,086 - bot - INFO - - /rendirse
+2025-06-08 17:20:43,086 - bot - INFO - - /ping
+2025-06-08 17:20:43,086 - bot - INFO - - /rbxlookup
+2025-06-08 17:20:43,086 - bot - INFO - - /pregunta
+2025-06-08 17:20:43,648 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 3c68423c00ea3c9c87251791c9fc29e3).
+2025-06-08 17:20:45,816 - bot - INFO - Conectado como Ansagrado Intelligence (ID: 1381033270736846928)
+2025-06-08 17:20:45,816 - bot - INFO - Conectado a 3 servidores
+2025-06-08 17:20:45,816 - bot - INFO - ¡Bot listo y funcionando!
+2025-06-08 17:21:59,807 - discord.app_commands.tree - ERROR - Ignoring exception in command 'ping'
+Traceback (most recent call last):
+  File "C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\app_commands\commands.py", line 857, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Santino\CascadeProjects\discord-bot\commands\ping.py", line 92, in ping
+    name=f"🔌 Información de Shards (Total: {len(self.bot.shards)})",
+                                                 ^^^^^^^^^^^^^^^
+AttributeError: 'MiBot' object has no attribute 'shards'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\app_commands\tree.py", line 1310, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\app_commands\commands.py", line 883, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Santino\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\app_commands\commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'ping' raised an exception: AttributeError: 'MiBot' object has no attribute 'shards'
+2025-06-08 17:23:01,225 - discord.client - INFO - logging in using static token
+2025-06-08 17:23:01,866 - bot - INFO - Iniciando carga de cogs...
+2025-06-08 17:23:01,866 - bot - INFO - Cargando AhorcadoCog...
+2025-06-08 17:23:01,866 - bot - INFO - Cargando PingCog...
+2025-06-08 17:23:01,866 - bot - INFO - Cargando RobloxLookupCog...
+2025-06-08 17:23:01,866 - bot - INFO - Cargando DeepSeekCog...
+2025-06-08 17:23:01,866 - bot - INFO - Cogs cargados correctamente
+2025-06-08 17:23:01,866 - bot - INFO - Sincronizando comandos...
+2025-06-08 17:23:02,282 - bot - INFO - Comandos sincronizados (7):
+2025-06-08 17:23:02,282 - bot - INFO - - /ahorcado
+2025-06-08 17:23:02,282 - bot - INFO - - /letra
+2025-06-08 17:23:02,282 - bot - INFO - - /pista
+2025-06-08 17:23:02,285 - bot - INFO - - /rendirse
+2025-06-08 17:23:02,285 - bot - INFO - - /ping
+2025-06-08 17:23:02,285 - bot - INFO - - /rbxlookup
+2025-06-08 17:23:02,285 - bot - INFO - - /pregunta
+2025-06-08 17:23:02,709 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: de48a01157afdaa9cb55580a860dd5c0).
+2025-06-08 17:23:04,747 - bot - INFO - Conectado como Ansagrado Intelligence (ID: 1381033270736846928)
+2025-06-08 17:23:04,747 - bot - INFO - Conectado a 3 servidores
+2025-06-08 17:23:04,747 - bot - INFO - ¡Bot listo y funcionando!

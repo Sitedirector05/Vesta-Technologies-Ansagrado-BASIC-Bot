@@ -1,0 +1,345 @@
+import os
+import random
+import json
+import discord
+from discord.ext import commands
+from discord import app_commands
+import sys
+from pathlib import Path
+
+# Guardar el PID del proceso
+with open('bot.pid', 'w') as f:
+    f.write(str(os.getpid()))
+
+def handle_exception(exc_type, exc_value, exc_traceback):
+    """Maneja excepciones no capturadas"""
+    import traceback
+    error_msg = ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))
+    print(f"Error no capturado:\n{error_msg}", file=sys.stderr)
+    # Eliminar el archivo PID si existe
+    if Path('bot.pid').exists():
+        try:
+            os.remove('bot.pid')
+        except:
+            pass
+    sys.exit(1)
+
+# Configurar manejador de excepciones
+sys.excepthook = handle_exception
+from discord.ext import commands
+from discord.ui import Button, View
+from dotenv import load_dotenv
+from typing import Optional
+
+# Cargar variables de entorno
+load_dotenv()
+TOKEN = os.getenv('DISCORD_TOKEN')
+
+# Cargar preguntas y respuestas
+PREGUNTAS_RESPUESTAS = {}
+
+# Intentar cargar preguntas guardadas
+try:
+    with open('preguntas.json', 'r', encoding='utf-8') as f:
+        PREGUNTAS_RESPUESTAS = json.load(f)
+except FileNotFoundError:
+    # Crear archivo con preguntas por defecto si no existe
+    PREGUNTAS_RESPUESTAS = {
+        "hola": "¡Hola! ¿En qué puedo ayudarte?",
+        "cómo estás": "¡Estoy funcionando perfectamente, gracias por preguntar!",
+        "quién eres": "Soy un bot de Discord programado para ayudarte con diversas tareas."
+    }
+    with open('preguntas.json', 'w', encoding='utf-8') as f:
+        json.dump(PREGUNTAS_RESPUESTAS, f, ensure_ascii=False, indent=4)
+
+# Configuración del bot
+if not TOKEN:
+    print("Error: No se encontró el token de Discord. Asegúrate de tener un archivo .env con DISCORD_TOKEN=tu_token")
+    sys.exit(1)
+
+# Configuración de intenciones
+intents = discord.Intents.default()
+intents.messages = True
+intents.message_content = True
+intents.members = True
+
+# Crear el bot con prefijo y descripción
+bot = commands.Bot(
+    command_prefix='!',
+    intents=intents,
+    description='Bot de prueba con comandos slash'
+)
+
+# Sincronizar comandos al iniciar
+@bot.event
+async def on_ready():
+    print(f'Bot conectado como {bot.user.name} (ID: {bot.user.id})')
+    print('------')
+    
+    # Sincronizar comandos
+    try:
+        synced = await bot.tree.sync()
+        print(f"Comandos sincronizados: {len(synced)} comandos")
+    except Exception as e:
+        print(f"Error al sincronizar comandos: {e}")
+    
+    # Establecer estado personalizado
+    activity = discord.Game(name="¡Usa /ayuda")
+    await bot.change_presence(activity=activity)
+    print("Bot listo y escuchando comandos...")
+
+# El evento on_ready ya está definido arriba
+
+# Comando de apagado (solo para administradores)
+@bot.tree.command(name="apagar", description="Apaga el bot (solo administradores)")
+@app_commands.checks.has_permissions(administrator=True)
+async def apagar(interaction: discord.Interaction):
+    """Apaga el bot de manera segura"""
+    await interaction.response.send_message("🛑 Apagando el bot...")
+    print(f"Bot apagado por {interaction.user}")
+    await bot.close()
+
+# Comando para ver el avatar de un usuario
+@bot.tree.command(name="avatar", description="Muestra el avatar de un usuario")
+async def avatar(interaction: discord.Interaction, usuario: discord.Member = None):
+    """Muestra el avatar de un usuario"""
+    target = usuario or interaction.user
+    embed = discord.Embed(title=f"Avatar de {target.name}", color=discord.Color.blue())
+    embed.set_image(url=target.display_avatar.url)
+    await interaction.response.send_message(embed=embed)
+
+# Comando para ver información del servidor
+@bot.tree.command(name="info", description="Muestra información del servidor")
+async def info(interaction: discord.Interaction):
+    """Muestra información detallada del servidor"""
+    server = interaction.guild
+    
+    # Crear embed
+    embed = discord.Embed(
+        title=f"Información de {server.name}",
+        color=discord.Color.blue()
+    )
+    
+    # Agregar imagen del servidor si tiene
+    if server.icon:
+        embed.set_thumbnail(url=server.icon.url)
+    
+    # Añadir información básica
+    embed.add_field(name="👑 Dueño", value=server.owner.mention, inline=True)
+    embed.add_field(name="🆔 ID", value=server.id, inline=True)
+    embed.add_field(name="📅 Creado el", value=server.created_at.strftime("%d/%m/%Y"), inline=True)
+    
+    # Estadísticas del servidor
+    total_members = server.member_count
+    online_members = len([m for m in server.members if m.status != discord.Status.offline])
+    
+    embed.add_field(name="👥 Miembros", value=f"{total_members} total\n{online_members} en línea", inline=True)
+    
+    # Canales
+    text_channels = len(server.text_channels)
+    voice_channels = len(server.voice_channels)
+    categories = len(server.categories)
+    
+    embed.add_field(name="📚 Canales", value=f"💬 {text_channels} texto\n🔊 {voice_channels} voz\n📂 {categories} categorías", inline=True)
+    
+    # Roles y emojis
+    embed.add_field(name="🎨 Emojis", value=f"{len(server.emojis)}/{server.emoji_limit}", inline=True)
+    embed.add_field(name="🎭 Roles", value=str(len(server.roles)), inline=True)
+    
+    # Nivel de verificación
+    verification_levels = {
+        discord.VerificationLevel.none: "Ninguno",
+        discord.VerificationLevel.low: "Bajo",
+        discord.VerificationLevel.medium: "Medio",
+        discord.VerificationLevel.high: "Alto",
+        discord.VerificationLevel.highest: "Máximo"
+    }
+    
+    verification = verification_levels.get(server.verification_level, "Desconocido")
+    embed.add_field(name="🔒 Verificación", value=verification, inline=True)
+    
+    # Si hay un ícono de servidor, mostrarlo
+    if server.icon:
+        embed.set_thumbnail(url=server.icon.url)
+    
+    # Footer con información del solicitante
+    embed.set_footer(text=f"Solicitado por {interaction.user}", icon_url=interaction.user.display_avatar.url)
+    
+    await interaction.response.send_message(embed=embed)
+
+# Comando de ayuda
+@bot.tree.command(name="ayuda", description="Muestra todos los comandos disponibles")
+async def ayuda(interaction: discord.Interaction):
+    """Muestra todos los comandos disponibles"""
+    embed = discord.Embed(
+        title="🤖 Comandos disponibles",
+        description="¡Hola! Aquí tienes los comandos que puedes usar:",
+        color=discord.Color.blue()
+    )
+    
+    # Categorías de comandos
+    embed.add_field(
+        name="📝 Información",
+        value="""/info - Muestra información del servidor
+/avatar [usuario] - Muestra el avatar de un usuario
+/ayuda - Muestra esta ayuda""",
+        inline=False
+    )
+    
+    embed.add_field(
+        name="🎮 Minijuegos",
+        value="""/piedrapapeltijera - Juega piedra, papel o tijera
+/dado [caras] - Tira un dado con el número de caras que quieras
+/coinflip - Cara o cruz""",
+        inline=False
+    )
+    
+    embed.add_field(
+        name="❓ Preguntas y respuestas",
+        value="""/pregunta [pregunta] - Haz una pregunta al bot
+/agregar_pregunta [pregunta] [respuesta] - Añade una nueva pregunta y respuesta
+/lista_preguntas - Muestra todas las preguntas disponibles""",
+        inline=False
+    )
+    
+    embed.add_field(
+        name="⚙️ Administración",
+        value="/apagar - Apaga el bot (solo administradores)",
+        inline=False
+    )
+    
+    embed.set_footer(text=f"Solicitado por {interaction.user}", icon_url=interaction.user.display_avatar.url)
+    await interaction.response.send_message(embed=embed, ephemeral=True)
+
+# Comandos de minijuegos
+@bot.tree.command(name="piedrapapeltijera", description="Juega piedra, papel o tijera contra el bot")
+async def piedra_papel_tijera(interaction: discord.Interaction):
+    """Juega piedra, papel o tijera contra el bot"""
+    class PPTButton(discord.ui.Button):
+        def __init__(self, label, style, emoji, custom_id):
+            super().__init__(label=label, style=style, emoji=emoji, custom_id=custom_id)
+        
+        async def callback(self, interaction: discord.Interaction):
+            if interaction.user.id != interaction.message.interaction.user.id:
+                await interaction.response.send_message("¡Este no es tu juego!", ephemeral=True)
+                return
+                
+            eleccion_bot = random.choice(["piedra", "papel", "tijera"])
+            eleccion_usuario = self.custom_id
+            
+            resultado = ""
+            if eleccion_usuario == eleccion_bot:
+                resultado = "¡Empate!"
+            elif (eleccion_usuario == "piedra" and eleccion_bot == "tijera") or \
+                 (eleccion_usuario == "papel" and eleccion_bot == "piedra") or \
+                 (eleccion_usuario == "tijera" and eleccion_bot == "papel"):
+                resultado = f"¡Ganaste! Elegí {eleccion_bot}."
+            else:
+                resultado = f"¡Perdiste! Elegí {eleccion_bot}."
+            
+            embed = discord.Embed(
+                title=f"{interaction.user.name} vs Bot - Piedra, Papel o Tijera",
+                description=f"Tú elegiste: {eleccion_usuario}\nYo elegí: {eleccion_bot}\n\n**{resultado}**",
+                color=discord.Color.blue()
+            )
+            
+            # Deshabilitar todos los botones
+            for item in self.view.children:
+                item.disabled = True
+            
+            await interaction.response.edit_message(embed=embed, view=self.view)
+    
+    # Crear vista con botones
+    view = discord.ui.View(timeout=30)
+    
+    # Agregar botones
+    view.add_item(PPTButton("Piedra", discord.ButtonStyle.primary, "🪨", "piedra"))
+    view.add_item(PPTButton("Papel", discord.ButtonStyle.success, "📄", "papel"))
+    view.add_item(PPTButton("Tijera", discord.ButtonStyle.danger, "✂️", "tijera"))
+    
+    embed = discord.Embed(
+        title="Piedra, Papel o Tijera",
+        description="Elige una opción:",
+        color=discord.Color.blue()
+    )
+    
+    # Enviar mensaje con botones
+    await interaction.response.send_message(embed=embed, view=view)
+
+@bot.tree.command(name="dado", description="Tira un dado con el número de caras que quieras")
+@app_commands.describe(caras="Número de caras del dado (2-100)")
+async def dado(interaction: discord.Interaction, caras: int = 6):
+    """Tira un dado con el número de caras especificado"""
+    if caras < 2 or caras > 100:
+        await interaction.response.send_message("El número de caras debe estar entre 2 y 100.", ephemeral=True)
+        return
+        
+    resultado = random.randint(1, caras)
+    await interaction.response.send_message(f"🎲 Has sacado un **{resultado}** en un dado de {caras} caras.")
+
+@bot.tree.command(name="coinflip", description="Lanza una moneda al aire")
+async def coinflip(interaction: discord.Interaction):
+    """Lanza una moneda al aire"""
+    resultado = random.choice(["cara", "cruz"])
+    emoji = "😊" if resultado == "cara" else "🪙"
+    await interaction.response.send_message(f"{emoji} ¡Ha salido **{resultado.upper()}**!")
+
+# Comandos de preguntas y respuestas
+@bot.tree.command(name="pregunta", description="Haz una pregunta al bot")
+async def hacer_pregunta(interaction: discord.Interaction, pregunta: str):
+    """Responde a una pregunta del usuario"""
+    pregunta = pregunta.lower().strip('¿?¡!.,')
+    respuesta = PREGUNTAS_RESPUESTAS.get(pregunta, "Lo siento, no sé la respuesta a esa pregunta. ¿Quieres que la aprenda? Usa /agregar_pregunta")
+    await interaction.response.send_message(f"❓ **Pregunta:** {pregunta.capitalize()}?\n💡 **Respuesta:** {respuesta}")
+
+@bot.tree.command(name="agregar_pregunta", description="Añade una nueva pregunta y respuesta al bot")
+async def agregar_pregunta(interaction: discord.Interaction, pregunta: str, respuesta: str):
+    """Añade una nueva pregunta y respuesta al bot"""
+    pregunta = pregunta.lower().strip('¿?¡!.,')
+    if pregunta in PREGUNTAS_RESPUESTAS:
+        await interaction.response.send_message("⚠️ Esta pregunta ya existe. Usa /lista_preguntas para ver las preguntas existentes.", ephemeral=True)
+    else:
+        PREGUNTAS_RESPUESTAS[pregunta] = respuesta
+        with open('preguntas.json', 'w', encoding='utf-8') as f:
+            json.dump(PREGUNTAS_RESPUESTAS, f, ensure_ascii=False, indent=4)
+        await interaction.response.send_message(f"✅ Pregunta añadida correctamente. Ahora puedo responder a: '{pregunta}'")
+
+@bot.tree.command(name="lista_preguntas", description="Muestra todas las preguntas disponibles")
+async def lista_preguntas(interaction: discord.Interaction):
+    """Muestra todas las preguntas disponibles"""
+    if not PREGUNTAS_RESPUESTAS:
+        await interaction.response.send_message("No hay preguntas guardadas todavía. Usa /agregar_pregunta para añadir una.")
+    else:
+        preguntas = "\n".join([f"• {pregunta}?" for pregunta in PREGUNTAS_RESPUESTAS.keys()])
+        embed = discord.Embed(
+            title="📚 Preguntas disponibles",
+            description=preguntas,
+            color=discord.Color.blue()
+        )
+        await interaction.response.send_message(embed=embed)
+
+# Comandos antiguos (mantenidos por compatibilidad)
+@bot.event
+async def on_message(message):
+    # Ignorar mensajes del propio bot
+    if message.author == bot.user:
+        return
+    
+    # Comandos con prefijo ! (mantenidos por compatibilidad)
+    if message.content.startswith('!hola'):
+        await message.channel.send(f'¡Hola {message.author.mention}! ¿Cómo estás?')
+    elif message.content.startswith('!info'):
+        await message.channel.send(f'¡Hola! Soy un bot de prueba. Usa /ayuda para ver mis comandos.')
+    elif message.content.startswith('!ayuda'):
+        await message.channel.send('¡Hola! Estos son mis comandos: /ayuda, /info, /piedrapapeltijera, /dado, /coinflip, /pregunta, /agregar_pregunta, /lista_preguntas')
+    
+    # Procesar otros comandos
+    await bot.process_commands(message)
+
+# Iniciar el bot
+if __name__ == "__main__":
+    if TOKEN:
+        bot.run(TOKEN)
+    else:
+        print("Error: No se encontró el token de Discord. Asegúrate de tener un archivo .env con DISCORD_TOKEN")
+        print("Puedes obtener tu token en: https://discord.com/developers/applications")
